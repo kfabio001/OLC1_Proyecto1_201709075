@@ -1,0 +1,17 @@
+// Grafo JavaScript
+digraph {
+	node [shape=circle]
+	0 [label=0]
+	0 -> 1 [label=var]
+	1 [label=1]
+	1 -> 2 [label=ID]
+	2 [label=2]
+	2 -> 3 [label="="]
+	3 [label=3]
+	3 -> 4 [label=ID]
+	4 [label=4]
+	4 -> 5 [label=";"]
+	3 -> 4 [label="\"cadena\""]
+	3 -> 4 [label=num]
+	5 [shape=doublecircle]
+}
