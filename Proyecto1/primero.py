@@ -1232,7 +1232,7 @@ class Ejemplo2:
             elif lexema==";":
                 self.reescribir(lexema)
                 if vari==True:
-                    cadena=cadena+"ID ;"
+                    cadena=cadena+"ID|L|D;"
                     print(cadena)
                     self.expreionJS(cadena)
                     cadena=""
@@ -1473,7 +1473,45 @@ class Ejemplo2:
                         dot.edge(str(countST), str(countST+1), label=lex)
                         countST=countST+1
                    
-        elif expresion=="var ID = ID ;":
+        elif expresion=="var ID = ID|L|D;":
+            countID=0
+            countST=0
+            if contVar==1:
+                self.cad.insert(INSERT,"Expresion: ")
+                self.cad.insert(INSERT,'"VAR" [ID]=([ID]|[cadena]|[num])')
+                self.cad.insert(INSERT," Reconocida")
+                separado=expresion.split(" ")
+                tokeni=list(expresion)
+                for i_lex in separado:
+                    lex=str(i_lex)
+                    if lex==";":
+                        dot.node(str(countST),str(countST))
+                        dot.edge(str(countST), str(countST+1), label=lex)
+                        dot.edge(str(countST-1), str(countST), label=lexCad)
+                        dot.edge(str(countST-1), str(countST), label=lexN)
+                        dot.node(str(countST+1), shape='doublecircle')
+                        print(dot.source)
+                        archi=""+patsi
+                        #dot.render(patsi+"/ExpresionVar.gv")#, view=True
+                        dot.render("ExpresionVar.gv")#, view=True))
+                        print("AFD var Generado")
+                        countST=countST+1
+                    elif lex==ID and countID==0:
+                        countID=0
+                        dot.node(str(countST),str(countST))
+                        dot.edge(str(countST), str(countST+1), label=lex)
+                        countST=countST+1
+                        countID=countID+1
+                    elif lex==ID and countID!=0:
+                        lex=lex+"_asig"
+                        dot.node(str(countST),str(countST))
+                        dot.edge(str(countST),str(countST+1), label=lex)
+                        countST=countST+1
+                    else:
+                        dot.node(str(countST),str(countST))
+                        dot.edge(str(countST), str(countST+1), label=lex)
+                        countST=countST+1
+        elif expresion=="var ID = ID ID|L|D;":
             countID=0
             countST=0
             if contVar==1:
@@ -1722,6 +1760,7 @@ class Ejemplo2:
             if vari==True :
                 ID=ID+1
                 if ID==1 or ID==2:
+                    print("")
                     cadena=cadena+"ID "
                     #self.cad.insert(INSERT,"ID ")
 
